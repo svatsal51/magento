@@ -1,0 +1,14 @@
+enable block commnets
+\vendor\magento\framework\View\Layout.php
+ mathod : renderNonCachedElement
+code :  // $result = $this->_renderContainer($name);
+                $result = "<!--  >> START Container : " . $name . " <<  -->" . $this->_renderContainer($name) . "<!--  >> END Container : " . $name . " <<  -->";
+
+W:\www\dilina\vendor\magento\framework\View\Element\Template.php
+mathod : toHhtml
+code:
+$name = $this->getNameInLayout();
+    $template = $this->getTemplateFile();
+    $class = get_class($this);
+      return "<!-- BEGIN ($name) Block-($class) -->\n". $this->fetchView($template) . "<!-- END ($name) Template-($template) -->";
+   // return $this->fetchView($this->getTemplateFile());

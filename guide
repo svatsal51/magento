@@ -1,0 +1,956 @@
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Add link through content
+----------------------------------------------------------------------->
+
+<a href="{{store url="customer-service"}}" title="Customer Service">Customer Service</a>
+OR
+<a href="{{store direct_url="customer-service"}}" title="Customer Service">Customer Service</a>
+<a href="{{media url="wysiwyg/files/pillmanager.jpg"}}" title="Customer Service">Customer Service</a>
+{{media url="wysiwyg/files/Chemist_net_Pharmacy_Practice_Leaflet(1).pdf"}}
+
+<a href="{{media url="wysiwyg/files/Chemist_net_Pharmacy_Practice_Leaflet(1).pdf"}}" target="_blank">Chemist.net Pharmacy Practice Leaflet</a>
+
+{{media url="wysiwyg/files/Chemist_net_Pharmacy_Practice_Leaflet(1).pdf"}}
+{{media url="wysiwyg/files/Chemist_net_Pharmacy_Practice_Leaflet(1).pdf"}}
+
+
+<li><a href="/userfiles/file/Chemistnet_Safeguarding_Information_Leaflet.pdf" target="_blank">Chemist.net Safeguarding Information Leaflet</a></li>
+<li><a href="/userfiles/file/213 Safeguarding Information Leaflet A4 Large Print.pdf" target="_blank">Chemist.net Safeguarding Information A4 Leaflet Large Print</a></li>
+
+http://www.chemist.net/medicines-electronic-cigarettes-disposable-electronic-cigarettes/gamucci/gamucci-continental-400-disposable-electronic-cigarette-pd-9495.html
+
+{{store direct_url="catalogsearch/result/?q=eshish+500"}}
+
+col-md-4 col-sm-4 col-xs-12
+
+&nbsp;
+Home page URL :
+
+<div class="reset-add-div"><a class="reset-add" title="{{trans 'Reset Address'}}" href="{{store direct_url="resetaddress"}}">{{trans 'Reset Address'}}</a></div>
+
+<li><a title="{{trans 'Reset Address'}}" href="{{store direct_url="sales/guest/form"}}">{{trans 'Track your Order'}}</a></li>
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Display Static Block in Phtml file & CMS page
+----------------------------------------------------------------------->
+(a) XML File 
+
+<referenceContainer name="content">
+	<block class="Magento\Cms\Block\Block" name="block_identifier">
+		<arguments>
+			<argument name="block_id" xsi:type="string">my-static-block</argument>
+		</arguments>
+	</block>
+</referenceContainer>
+
+<referenceContainer name="content">
+	<block class="Magento\Cms\Block\Block" name="block_identifier">
+		<arguments>
+			<argument name="block_id" xsi:type="string">cms-block-banner</argument>
+		</arguments>
+	</block>
+</referenceContainer>
+
+(b) Phtml File 
+
+<?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('my-static-block')->toHtml();?>
+
+(a) CMS Content 
+
+{{block class="Magento\\Cms\\Block\\Block" block_id="my-static-block"}}
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Make a custom .phtml file and call it
+----------------------------------------------------------------------->
+Make a .phtml file at below path
+
+app/design/frontend/{Package}/{theme}/Magento_Theme/templates/html/social-button.phtml
+
+(1) Call through XMl file 
+<referenceContainer name="header.panel">
+<block class="Magento\Framework\View\Element\Template" name="social-button.phtml" template="Magento_Theme::html/social-button.phtml"/>
+</referenceContainer>
+
+(2) Call through content XMl file 
+<referenceContainer name="header.panel">
+	<block class="Magento\Cms\Block\Block" name="top-header-social-button">
+		<arguments>
+			<argument name="block_id" xsi:type="string">top-header-social-button</argument>
+		</arguments>
+	</block>
+</referenceContainer>
+{{block class="Magento\Framework\View\Element\Template" name="test_file" template="Magento_Theme::html/social-button.phtml"}}
+{{block class="Magento\Store\Block\Switcher" name="store.settings.language" template="Magento_Theme::html/languages.phtml"}}
+
+(3) Call through phtml file
+<?php include ($block->getTemplateFile('Magento_Theme::html/social-button.phtml')) ?>
+
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- How to include additional Css and jquery
+----------------------------------------------------------------------->
+
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Theme\layout\default_head_blocks.xml
+
+Add <css src="css/my-styles.css"/> under Head Tag
+
+Add <link src="js/my-jquery.js"/> under Head Tag
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Important Temlpate path (e.g header,footer,logo,copyright etc)
+----------------------------------------------------------------------->
+
+T:\www\magento2-study\vendor\magento\module-theme\view\frontend\templates\html
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Logo H1 condition 
+----------------------------------------------------------------------->
+
+<?php if ($block->isHomePage()):?>
+    <h1 class="logo">
+		<a class="logo" href="<?php echo $block->getUrl(''); ?>" title="<?php /* @escapeNotVerified */ echo $storeName ?>">
+        	<img src="<?php /* @escapeNotVerified */ echo $block->getLogoSrc() ?>"
+             	alt="<?php /* @escapeNotVerified */ echo $block->getLogoAlt() ?>"
+             	<?php echo $block->getLogoWidth() ? 'width="' . $block->getLogoWidth() . '"' : '' ?>
+         		<?php echo $block->getLogoHeight() ? 'height="' . $block->getLogoHeight() . '"' : '' ?>
+        	/>
+		</a>
+	</h1>
+<?php else: ?>
+	<a class="logo" href="<?php echo $block->getUrl(''); ?>" title="<?php /* @escapeNotVerified */ echo $storeName ?>">
+    	<img src="<?php /* @escapeNotVerified */ echo $block->getLogoSrc() ?>"
+             alt="<?php /* @escapeNotVerified */ echo $block->getLogoAlt() ?>"
+             <?php echo $block->getLogoWidth() ? 'width="' . $block->getLogoWidth() . '"' : '' ?>
+         <?php echo $block->getLogoHeight() ? 'height="' . $block->getLogoHeight() . '"' : '' ?>
+        />
+	</a>
+<?php endif;?>
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Top links loign (My Account, AuthorizationLink define here) 
+----------------------------------------------------------------------->
+
+T:\www\magento2-study\vendor\magento\module-customer\view\frontend\layout\default.xml
+
+T:\www\magento2-study\vendor\magento\module-customer\Block\Account\AuthorizationLink.php
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Remove Sidebar Blocks
+----------------------------------------------------------------------->
+
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Catalog\layout\default.xml
+
+<referenceBlock name="div.sidebar.main" remove="true"/>
+<referenceBlock name="catalog.compare.sidebar" remove="true"/>
+<referenceBlock name="wishlist_sidebar" remove="true" />
+
+<remove name="cart_sidebar"/>                   <!--Cart Sidebar-->
+<remove name="catalog.product.related"/>        <!--Related products sidebar-->
+<remove name="wishlist_sidebar"/>               <!--Wishlist Sidebar-->
+<remove name="catalog.compare.sidebar"/>        <!--Compare Items Sidebar-->
+<remove name="right.permanent.callout"/>        <!--Right Callout Sample Data-->
+<remove name="left.permanent.callout"/>         <!--Left Callout Sample Data-->
+<remove name="right.reports.product.viewed"/>   <!--Viewed Products-->
+<remove name="right.reports.product.compared"/> <!--Compared Products-->
+<remove name="catalog.leftnav"/>                <!--Layered Navigation-->
+<remove name="left.newsletter"/>                <!--Sidebar Newsletter-->
+<remove name="right.poll"/>                     <!--Poll-->
+<remove name="tags_popular"/>                   <!--Popular Tags-->
+<remove name="paypal.partner.right.logo"/>      <!--Paypal logo Sample Data-->
+<remove name="catalogsearch.leftnav"/>          <!--Layered navigation on search result page-->
+<remove name="sale.reorder.sidebar"/>           <!--Reorder Sidebar When User Logged, in Dashboard-->
+<remove name="customer_account_navigation"/>    <!--Customer Navigation-->
+
+
+For Remove My Account Dashbord links find tag 
+<referenceBlock name="customer_account_navigation">
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Override XML file in our theme
+----------------------------------------------------------------------->
+
+e.g override newsletter module
+
+copy default.xml from below path
+T:\www\magento2-study\vendor\magento\module-newsletter\view\frontend\layout\default.xml
+
+paste at below path
+create override folder and also create base folder in it them paste default.xml 
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Newsletter\layout\override\base
+
+For .phtml file theere is no need to create override folder
+copy subscribe.phtml file form verdor folder 
+e.g T:\www\magento2-study\vendor\magento\module-newsletter\view\frontend\templates\subscribe.phtml
+
+paste in our theme folder
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Newsletter\templates\
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- How to add static block in custom tabs on product detail page 
+----------------------------------------------------------------------->
+1) Call static block using XML code
+open below path
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Catalog\layout\catalog_product_view.xml
+Add following code 
+<referenceBlock name="product.info.details">
+	<block class="Magento\Cms\Block\Block" name="deliveryinfo.tab" as="deliveryinfo" group="detailed_info">
+		<arguments>
+			<argument name="block_id" xsi:type="string">my-static-block</argument>
+			<argument translate="true" name="title" xsi:type="string">Custom tab</argument>
+		</arguments>
+	</block>
+</referenceBlock>
+
+
+2) Call static block using XML and PHTML file
+open below path
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Catalog\layout\catalog_product_view.xml
+Add following code 
+<referenceBlock name="product.info.details">
+	<block class="Magento\Catalog\Block\Product\View" name="deliveryinfo.tab" as="deliveryinfo" template="product/view/delivery_info.phtml" group="detailed_info">
+		<arguments>
+			<argument translate="true" name="title" xsi:type="string">Custom tab</argument>
+		</arguments>
+		</block>
+</referenceBlock>
+
+Make a delivery_info.phtml at below path and call a static block in it
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Catalog\templates\product\view\delivery_info.phtml
+
+e.g <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('my-static-block')->toHtml(); ?>
+
+
+{{block class="Magento\Framework\View\Element\Template" template="Magento_Theme::custom/wppost.phtml"}}
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!------------------------------------------------------------------------------
+Magento2- Related products, Up-cell products, Cross-cell Products, New Products 
+------------------------------------------------------------------------------->
+
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Catalog\templates\product\list\items.phtml
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!------------------------------------------------------------------------------
+Magento2- Root Directory path  
+------------------------------------------------------------------------------->
+
+1) app/code - for modules
+2) app/design/frontend - for storefront theme
+3) app/design/adminhtml - for Magento Admin theme
+4) app/i18n - for language packages
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!------------------------------------------------------------------------------
+Magento2- How to install magento extension   
+------------------------------------------------------------------------------->
+
+(1) Using Composer
+(2) Mannual Installation 
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!------------------------------------------------------------------------------
+Magento2- Magento Customer Registration form on how to display Address field   
+------------------------------------------------------------------------------->
+Go to Below path :
+
+T:\www\magento2-study\app\design\frontend\Magento\study-theme\Magento_Customer\templates\form\register.phtml
+
+Write below code 
+<?php $this->setShowAddressFields(true); ?> 
+before 	
+<?php if ($block->getShowAddressFields()): ?>
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- How to add new layout like 1column, 2column-left
+----------------------------------------------------------------------->
+Copy page_layout folder from X:\www\logo4polo\vendor\magento\module-theme\view\frontend 
+and paste W:\www\logos4polos\app\design\frontend\Magento\logos4polos\Magento_Theme
+
+Now copy xml file e.g 1column.xml and rename to home.xml
+
+Copy layouts.xml file from X:\www\logo4polo\vendor\magento\module-theme\view\frontend
+and paste W:\www\logos4polos\app\design\frontend\Magento\logos4polos\Magento_Theme
+
+now open layouts.xml file and add below code
+<layout id="home">
+	<label translate="true">Home</label>
+</layout>
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- How to add class in BODY tag
+----------------------------------------------------------------------->
+
+<attribute name="class" value="product_simple" />
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- How to change all image size 
+----------------------------------------------------------------------->
+
+W:\www\logos4polos\app\design\frontend\Magento\logos4polos\etc\view.xml
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Get Bass URL and media path 
+----------------------------------------------------------------------->
+
+http://hey-bloggers.com/magento1/magento-get-base-url-skin-url-media-url-js-url-store-url-and-current-url/
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Get Attribute value 
+----------------------------------------------------------------------->
+create a instatce at first 
+<?php $objectManager = \Magento\Framework\App\ObjectManager::getInstance(); ?>
+
+<?php 
+echo $_product = $objectManager->get('Magento\Catalog\Model\Product')->load($_selection->getId());
+echo $base_fabric_requirement = $attributeHelper->productAttribute($_product, $_product->getBaseFabricRequirement(), 'base_fabric_requirement');
+?>
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Add breadcums on contact page 
+----------------------------------------------------------------------->
+
+<referenceBlock name="breadcrumbs">
+	<action method="addCrumb">
+		<argument name="crumbName" xsi:type="string">Home</argument>
+		<argument name="crumbInfo" xsi:type="array">
+		<item name="title" xsi:type="string">Go to Home Page</item>
+		<item name="label" xsi:type="string">Home</item>
+		<item name="link" xsi:type="string">/</item>
+		</argument>
+ 	</action>
+    <action method="addCrumb">
+    	<argument name="crumbName" xsi:type="string">Contact Us</argument>
+        <argument name="crumbInfo" xsi:type="array">
+        <item name="title" xsi:type="string">Contact Us</item>
+        <item name="label" xsi:type="string">Contact Us</item>
+      	</argument>
+   </action>
+</referenceBlock>
+		
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- When Install new extension 
+----------------------------------------------------------------------->
+
+Make sure first take a folder and database backup 
+
+Magento Upgrade command 
+Go To magento project root folder 
+php bin/magento setup:upgrade
+OR
+php bin/magento setup:upgrade --keep-generated
+
+Satic content deploy command 
+
+php -dmemory_limit=6G bin/magento setup:static-content:deploy
+
+
+Compile Coomannd for error checking
+php -dmemory_limit=6G bin/magento setup:di:compile
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Incase customer not show in back-end
+----------------------------------------------------------------------->
+Index Management Required 
+
+Status must have "READY" instead of "REINDEX REQUIRED" in Customer Grid row
+
+Go To www/ then root folder 
+e. www/logos4polos 
+
+For check Index Management status enter below command 
+bin/magento indexer:status 
+
+For change status to "READY" to "REINDEX REQUIRED" enter below command
+bin/magento indexer:reindex customer_grid
+
+Then refresh in back-end All customers link
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Clear cache & reindex using putty
+----------------------------------------------------------------------->
+
+>> Go TO magento project folder and insert below command
+php bin/magento cache:flush
+php bin/magento indexer:reindex 
+
+php bin/magento setup:upgrade
+OR
+
+php bin/magento setup:upgrade --keep-generated
+
+php -dmemory_limit=6G bin/magento setup:static-content:deploy
+
+php bin/magento cache:flush
+
+php bin/magento indexer:reindex 
+
+And do following command
++++++++++++++++++++++
+rm -rf var/generation/ var/page_cache/ var/cache var/di
+php bin/magento setup:upgrade
+php56 bin/magento setup:upgrade
+
+OR 
+php bin/magento setup:upgrade --keep-generated
+php56 bin/magento setup:upgrade --keep-generated
+
+php -dmemory_limit=6G bin/magento setup:di:compile
+php56 -dmemory_limit=1G bin/magento setup:di:compile
+
+php -dmemory_limit=6G bin/magento setup:static-content:deploy
+php56 -dmemory_limit=6G bin/magento setup:static-content:deploy
+
+php56 -dmemory_limit=6G bin/magento setup:static-content:deploy en_US fr_CA es_ES
+
+php bin/magento cache:flush
+php56 bin/magento cache:flush
+
+php bin/magento cache:clean
+php56 bin/magento cache:clean
+
+php bin/magento indexer:reindex
+php56 bin/magento indexer:reindex
+
+composer require vsourz/banner-slider:1.0.0
+composer require vsourz/age-verification:1.0.0
+composer require vsourz/base:1.0.0
+
+
+rm -rf var/generation/ var/page_cache/ var/cache var/di
+php56 bin/magento setup:upgrade
+php56 -dmemory_limit=1G bin/magento setup:di:compile
+php56 -dmemory_limit=6G bin/magento setup:static-content:deploy en_US fr_CA es_ES
+php56 bin/magento cache:flush
+php56 bin/magento cache:clean
+php56 -dmemory_limit=6G bin/magento indexer:reindex
+
+
+
+rm -rf var/generation/ var/page_cache/ var/cache var/di
+php bin/magento setup:upgrade
+php -dmemory_limit=1G bin/magento setup:di:compile
+php -dmemory_limit=6G bin/magento setup:static-content:deploy en_US fr_CA es_ES
+php bin/magento cache:flush
+php bin/magento cache:clean
+php -dmemory_limit=6G bin/magento indexer:reindex
+
+
+++++++++++++++++++++++++++++++
+
+IF U want to delete extension from folder and front-end not work then do below:
+
+Go to Databse and find "setup_module" table and delete extension related row
+
+ 63, 'default', 0, 'dev/static/sign', '0'
+ 
+
+How to check mode
++++++++++++++++++
+ 
+php bin/magento deploy:mode:show
+php bin/magento deploy:mode:set production
+
+
++++++++++++++++++++++
+
+php bin/magento setup:static-content:deploy               
+
+Deploys static view files Magento 2.0
+   
+setup:static-content:deploy [-d|--dry-run] [languages1] ... [languagesN]
+
+Magento 2.1
+
+setup:static-content:deploy [-d|--dry-run] [--no-javascript] [--no-css] [--no-less] [--no-images] [--no-fonts] [--no-html] [--no-misc] [--no-html-minify] [-t|--theme[="..."]] [--exclude-theme[="..."]] [-l|--language[="..."]] [--exclude-language[="..."]] [-a|--area[="..."]] [--exclude-area[="..."]] [-j|--jobs[="..."]] [--symlink-locale] [languages1] ... [languagesN]
+
++++++++++++++++++++++
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- Incase customer not show in back-end
+----------------------------------------------------------------------->
+Order Delete Extension 
+
+http://www.ibnab.com/en/blog/magento-2/magento-2-extension-our-new-extension-delete-orders
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- How to add custom breadcum in XML
+----------------------------------------------------------------------->
+
+http://www.webmull.com/magento-2-add-new-custom-breadcrumb-in-checkout-page/
+
+
+<referenceBlock name="breadcrumbs">
+	<action method="addCrumb">
+		<argument name="crumbName" xsi:type="string">Home</argument>
+		<argument name="crumbInfo" xsi:type="array">
+		<item name="title" xsi:type="string">Home</item>
+		<item name="label" xsi:type="string">Home</item>
+		<item name="link" xsi:type="string">/</item>
+		</argument>
+	</action>
+	<action method="addCrumb">
+		<argument name="crumbName" xsi:type="string">Shopping Cart</argument>
+		<argument name="crumbInfo" xsi:type="array">
+		<item name="title" xsi:type="string">Shopping Cart</item>
+		<item name="label" xsi:type="string">Shopping Cart</item>
+		<item name="link" xsi:type="string">/checkout/cart</item>
+		</argument>
+	</action>
+</referenceBlock>
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- How to call static tab on product detail page
+----------------------------------------------------------------------->
+Call following code in catalog_product_view.xml
+
+<referenceBlock name="product.info.details">
+	<block class="Magento\Catalog\Block\Product\View" name="deliveryinfo.tab" as="deliveryinfo" template="product/view/delivery_info.phtml" group="detailed_info">
+		<arguments>
+			<argument translate="true" name="title" xsi:type="string">Delivery Information</argument>
+		</arguments>	
+	</block>
+</referenceBlock>
+
+Now Create a delivery_info.phtml at below location 
+
+W:\www\logos4polos\app\design\frontend\Magento\logos4polos\Magento_Catalog\templates\product\view\delivery_info.phtml
+
+and call static block in it
+e.g  <?php echo $block->getLayout()->createBlock('Magento\Cms\Block\Block')->setBlockId('delivery_info')->toHtml(); ?>	
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+<!----------------------------------------------------------------------
+Magento2- How to call attribute in tab on product detail page
+----------------------------------------------------------------------->
+
+Make a attribute named "size_information" in back-end 
+
+Call following code in catalog_product_view.xml
+
+<referenceBlock name="product.info.details">
+	<block group="detailed_info" class="Magento\Catalog\Block\Product\View\Attributes" name="size.info.tab" template="product/view/information-tab.phtml" after="-">
+		<arguments>
+			<argument name="at_call" xsi:type="string">getSize_Information</argument>
+			<argument name="at_code" xsi:type="string">size_information</argument>
+			<argument name="css_class" xsi:type="string">size_information</argument>
+			<argument name="at_label" xsi:type="string">size_information</argument>
+			<argument translate="true" name="title" xsi:type="string">Size Information</argument>
+			<argument name="add_attribute" xsi:type="string">itemprop="size_information"</argument>
+		</arguments>
+	</block>
+</referenceBlock>
+
+Now Create a information-tab.phtml at below location 
+
+W:\www\logos4polos\app\design\frontend\Magento\logos4polos\Magento_Catalog\templates\product\view\information-tab.phtml
+
+and write below code in it 
+
+
+<?php
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$_product = $block->getProduct();
+$_code = $block->getAtCode();
+$_className = $block->getCssClass();
+$_attributeLabel = $block->getAtLabel();
+$_attributeType = $block->getAtType();
+$_attributeAddAttribute = $block->getAddAttribute();
+
+if ($_attributeLabel && $_attributeLabel == 'default')
+{
+	$_attributeLabel = $_product->getResource()->getAttribute($_code)->getFrontendLabel();
+}
+$_attributeValue =$_product->getResource()->getAttribute($_code)->getFrontend()->getValue($_product);
+?>
+<?php if ($_attributeValue): ?>
+<div class="product attibute <?php /* @escapeNotVerified */ echo $_className?>">
+	<!--<?php if ($_attributeLabel != 'none'): ?><strong class="type"><?php echo $_attributeLabel?></strong><?php endif; ?>-->
+	<div class="value" <?php echo $_attributeAddAttribute;?>><?php echo $_attributeValue; ?></div>
+</div>
+<?php endif; ?>
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Get SKU in phtml file
+
+<?php /* @escapeNotVerified */ echo $items->getSku() ?>
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Get SKU in phtml file
+
+<?php if($order->getCustomerIsGuest())
+	{
+		echo "customer is guest";
+	}
+	else
+	{
+    	echo "customer is Registerted";
+	}
+?>
+
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+Comment success page seesion
+
+\\192.168.0.107\jimit\www\extensiondemo\vendor\magento\module-checkout\Controller\Onepage\Success.php
+
+// $session->clearQuote();
+
+
+++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
+
+<script>
+/* start: same height code for listing page*/
+// Select and loop the container element of the elements you want to equalise
+jQuery('.cate-pro .product-item-details').each(function(){  
+	
+// Cache the highest
+var product_item_name_maxHeight = 0;
+var product_review_maxHeight = 0;
+var product_pricebox_maxHeight = 0;		
+var product_actions_maxHeight = 0;					  
+// get height of "product-item-name" which are you want to equalise
+jQuery(".cate-pro .product-item-name").each(function()
+{
+	if (jQuery(this).height() > product_item_name_maxHeight) 
+	{  
+		product_item_name_maxHeight = jQuery(this).height(); 
+	}
+});
+// set  element "product-item-name" which are you want to equalise
+jQuery(".cate-pro .product-item-name").height(product_item_name_maxHeight);
+
+
+// get height of "product-reviews-summary" which are you want to equalise
+jQuery(".product-reviews-summary").each(function()
+{
+	if (jQuery(this).height() > product_review_maxHeight) 
+	{  
+		product_review_maxHeight = jQuery(this).height(); 
+	}
+});
+// set  element "product-reviews-summary" which are you want to equalise
+jQuery(".product-reviews-summary").height(product_review_maxHeight);
+		
+});
+/* end : same height code for listing page */ 
+</script>
+
+How to enable maintenance mode 
++++++++++++++++++++++++++++++++
+
+php bin/magento maintenance:status
+
+php bin/magento maintenance:enable
+
+php bin/magento maintenance:disable
+
+file created in var/.maintenance.flag
+
+
+Css Version In Magento 2
+<css rel="stylesheet" type="text/css" src="css/aditya.css?20170117"/>
+
+
+Magento 2.1.3
++++++++++++++++++++++++++++++++
+After install magento 2.1.3
+
+Add old htaccess file
+
+Change in Database
+Go To : core_config_data and insert new row
+
+Replace "dev/static/sign" with general 
+and put value in 0
+
+
+
+Error Validation messages
+++++++++++++++++++++++++++
+
+http://blog.magestore.com/lesson-14-form-on-magento-frontend-part-2/
+
+
+
++++++++++++++++++++++
+Rendering container name
+----------
+
+File: Z:\www\bodywiseuk\vendor\magento\framework\View\Layout.php :: protected function _renderContainer($name)
+589:         $html .= "<!--  >> Container : " . $name . " <<  -->";
+
++++++++++++++++++++++
+Rendering block name and template file path
++++++++++++++++++++++
+File: Z:\www\bodywiseuk\vendor\magento\framework\View\Element\Template.php :: protected function _toHtml()
+ if (!$this->getTemplate()) {
+     return '';
+ }
+ return $this->fetchView($this->getTemplateFile());
+ (!$this->getTemplate()) {
+	return '';
+            }
+             $name = $this->getNameInLayout();
+             $template = $this->getTemplateFile();
+             $class = get_class($this);
+            return "<!-- BEGIN ($name) Block-($class) -->\n". $this->fetchView($template) . "<!-- END ($name) Template-($template) -->";
+
+++--++--++--++--++--++--++--++--++--++--++--++--++--++--++--++
+
+
+* Create Container *
+<container  name="header.top.container" label="Page header Top Container" htmlTag="div" htmlClass="panel header block-container" />
+
+
+* Change in container *
+<referenceContainer name="header.top.container" as="header.top.container" label="Page header Top" htmlTag="div" htmlClass="panel header block-container custom_class" />
+
++++++++++++++++++++++++++++
+Setup project through putty
+---------------------------
++++++++++++++++++++++
+Install Magento Using Command/Terminal/Putty ::--
+
+php -dmemory_limit=4g bin/magento setup:install \
+--admin-firstname=Tejas \
+--admin-lastname=Rana \
+--admin-email="tejasr@squadmail.biz" \
+--admin-user=superadmin \
+--admin-password=superadmin123 \
+--base-url=http://192.168.0.107/~tejasr/magento21 \
+--backend-frontname=admin \
+--db-name=magento2 \
+--db-host=localhost \
+--db-user=vsourz \
+--db-password=vsourz \
+--language=en_US \
+--currency=USD \
+--use-rewrites=1 \
+--session-save=db \
+--cleanup-database
+
++++++++++++++++++++++
+
+
+
+"php": "~5.5.22|~5.6.0|7.0.2|7.0.4|~7.0.6",
+"magento/framework": "100.0.*|100.1.*"
+
+
+
+
+Extensions for Magento 2.0 or Magneto 2.1 only:
+
+M 2.0  —> "~5.5.22|~5.6.0|7.0.2|~7.0.6”
+M 2.1  —> "~5.6.5|7.0.2|7.0.4|~7.0.6”
+ 
+Extensions for Magento 2.0 and Magento 2.1 (supports both versions):
+ 
+M 2.0 and 2.1 —> "~5.5.22|~5.6.0|7.0.2|7.0.4|~7.0.6"
+
+
++++++++++++++++++++++++++++
+Get product image in phtml file
+---------------------------
+<?php
+$_product = $this->getProduct();
+$_helper = $this->helper('Magento\Catalog\Helper\Output');
+$image = 'product_page_image_small';
+?>
+
+<?php $productImage = $block->getImage($_product, $image);
+		echo $productImage->toHtml(); ?>		
+		
++++++++++++++++++++++++++++++++++		
+
+Dynamic copyright code
++++++++++++++++++++++++
+
+<?php echo __('Copyright '.'© '.date('Y').' Vsourz Limited, All rights reserved.'); ?><br/>
+
+
+
+Remove Sidebar link from MY Account 
+++++++++++++++++++++++++++++++++++++
+
+1) Billing Agreements : 
+Z:\www\vsourzmagento\app\design\frontend\Magento\vsourzmagento\Magento_Customer\layout\customer_account.xml 
+<!-- My Accouunt Billing Agreements  -->
+<referenceBlock name="customer-account-navigation-billing-agreements-link" remove="true" />
+
+2) Stored Payment Methods : 
+Z:\www\vsourzmagento\app\design\frontend\Magento\vsourzmagento\Magento_Customer\layout\customer_account.xml
+<referenceBlock name="customer-account-navigation-my-credit-cards-link" remove="true"/>
+
+3) My Review 
+Z:\www\vsourzmagento\app\design\frontend\Magento\vsourzmagento\Magento_Customer\layout\customer_account.xml
+<referenceBlock name="customer-account-navigation-product-reviews-link" remove="true"/>
+
+4) My Wish List
+Z:\www\vsourzmagento\app\design\frontend\Magento\vsourzmagento\Magento_Customer\layout\customer_account.xml
+<referenceBlock name="customer-account-navigation-wish-list-link" remove="true"/>
+	
+4) My Downloadable Products	
+Z:\www\vsourzmagento\app\design\frontend\Magento\vsourzmagento\Magento_Customer\layout\customer_account.xml
+<referenceBlock name="customer-account-navigation-downloadable-products-link" remove="true"/>		
+
+
+<!-- Remove Wishlist Block from sidebar -->
+<referenceBlock name="wishlist_sidebar" remove="true"/>
+		
+<!-- Remove Recently Ordered Block from sidebar -->
+<referenceBlock name="sale.reorder.sidebar" remove="true"/>
+
+Extract .tgz file
+++++++++++++++++++++++++++++++++++++
+
+tar -xvzf filename.tgz filename
+
+-x: tar can collect files or extract them. x does the latter.
+-v: Display progress in the terminal while creating the archive, also known as “verbose” mode. The v is always optional in these commands, but it’s helpful.
+-z: Compress the archive with gzip
+-f: Allows you to specify the filename of the archive.
+-c: Create an archive
+
+Compress .tgz file
+++++++++++++++++++++++++++++++++++++
+
+tar -czvf filename.tgz file
+
+
+
+1) Enable Block hint 
+
+Z:\www\chemist\vendor\magento\framework\View\Element\Template.php
+
+Change from 
+return $this->fetchView($this->getTemplateFile());
+To 
+return "<!-- BEGIN ($name) Block-($class) -->\n". $this->fetchView($template) . "<!-- END ($name) Template-($template) -->";
+
+
+2) Container hint 
+
+Z:\www\chemist\vendor\magento\framework\View\Layout.php
+
+Change from 
+$result = $this->_renderContainer($name);
+To 
+$result = "<!--  >> START Container : " . $name . " <<  -->" . $this->_renderContainer($name) . "<!--  >> END Container : " . $name . " <<  -->";
+
+/****
+Multiple Langage  
+*****/
+https://www.mageplaza.com/magento-2-spanish-language-pack.html
+https://www.mageplaza.com/magento-2-spanish-language-pack.html
+
+
+Multiple Language 
+++++++++++++++++++++++++++++++
+1) Translations (i18n)
+Ref : http://devdocs.magento.com/guides/v2.1/frontend-dev-guide/translations/translate_theory.html
+
+https://magento.stackexchange.com/questions/95118/magento-2-different-static-content-files-per-locale/96080#96080
+
+Strings added in .phtml templates
+------
+<h3><?php echo __('Create Backup') ?></h3>
+<h3><?php echo sprintf(__('Hello %s'), $yourVariable) ?></h3>
+++++++
+++++++
+
+Strings added in email templates
+------
+{{trans "Thank you for your order from %store_name." store_name=$store.getFrontendName()}}
+++++++
+++++++
+
+Strings added in UI components' templates (.html)
+------
+when a string is added in the scope of an HTML element:
+<span data-bind="i18n: 'Sign In'"></span>
+
+when a string is added with no binding to an HTML element:
+<!-- ko i18n: 'You have no items in your shopping cart.' --><!-- /ko -->
+++++++
+++++++
+
+Strings added in UI components configuration files (.xml)
+------
+Step 1) .xml file
+<item name="label" xsi:type="string" translate="true">Delete</item>
+
+Step 2) Translated strings that originate from .xml files will not render unless they are called with a __(<variable>) method. In this example, you would use a call similar to the following to display the translated Delete string.
+
+Step 3) .phtml file
+__($this->config->getData('label'))
+++++++
+++++++
+
+Strings added in .js files
+------
+Step 1) Link the mage/translate library:
+    define (['jquery', 'mage/translate'], function ($) {...});
+
+Step 2) Use the $.mage.__('') function when adding a string:
+    $.mage.__('<string>');
+    $.mage.__('Hello %1').replace('%1', yourVariable);
+
+/******
+Set field on Checkout page
+*******/
+https://magento.stackexchange.com/questions/139557/magento-2-change-the-order-of-the-shipping-fields-on-the-checkout-page
+
+
+
+Aptana Map Drive :
+++++++++++++++++++++++
+Protocol : SFTP 
+Server : 192.168.0.107
+username : sharad
+Password : SharadV
+Remote Path : /home/sharad/www

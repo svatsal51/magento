@@ -1,0 +1,127 @@
+1 Create Folder in www
+
+2 copy bz2 file in folder
+
+3 reach to that folder in putty
+
+4 extract with below command
+  tar jxf filename.tar.bz2
+  tar jxf magento.tar.bz2
+
+5 squadnetplus - webaccess - add web access and enter folder name
+
+6 777 permission
+
+7 run project using below url
+  192.168.0.107:8010/~vatsal/magentodemo/setup
+
+8 next
+
+9 enter username pass & dbname
+
+10 change url both and set only admin for admin url
+
+11 next next install
+
+12 permission both squadnet & putty
+
+13 #Htaccess set RewriteBase remove #
+ E.g /~kishans/magedemo/
+
+14 open sql query browser
+
+15
+#Only require for local install
+Disable sign for static content follow below steps
+=> set row with below data in `core_config_data` table
+	path : 'dev/static/sign'
+	value : 0
+	scope : default
+	scope_id : 0
+
+16 add row and save above value.
+
+17 clear all cache.
+	php71 bin/magento cache:clean
+	php71 bin/magento cache:flush
+
+18 apply below command
+    rm -rf var/generation/ var/page_cache/ var/cache var/di var/view_preprocessed
+
+19 apply below command
+   php71 -dmemory_limit=1G bin/magento setup:static-content:deploy -f
+
+20 give 777 permission
+
+21 run.
+
+NOTE: webaccess & 777
+
+
+
+//// SETUP
+
+1 change theme to blank
+2 web permission & 777
+3 disable all cache from admin
+4 enable developer mode by below command
+  php71 -dmemory_limit=1G bin/magento deploy:mode:set developer
+
+5 create theme folder
+6 add theme.xml and registration.php
+7 permission
+8 deploy using below
+	rm -rf var/generation/ var/page_cache/ var/cache var/di var/view_preprocessed
+	php71 -dmemory_limit=1G bin/magento setup:upgrade
+	php71 -dmemory_limit=1G bin/magento setup:di:compile
+	php71 -dmemory_limit=1G bin/magento setup:static-content:deploy -f
+
+
+
+//// Update Magento
+1) check in magento admin (magento web wizard / config)
+
+Public Key:
+0d38d7d4fa0d494035a41b2252897680
+Private Key:
+125cd9ef0f64f352f19fd1059512a5c6
+
+2) change version and apply command
+
+composer require magento/product-community-edition 2.3 --no-update
+composer update
+
+if(composer update not work)
+/opt/remi/php71/root/bin/php -dmemory_limit=2g /usr/local/bin/composer require magento/product-community-edition 2.3.0 --no-update
+
+From 2.2.6 to 2.3
+++++++++++++++++++++++++++++++++++++++
+/opt/remi/php71/root/bin/php -dmemory_limit=2g /usr/local/bin/composer require --dev phpunit/phpunit:~6.2.0 friendsofphp/php-cs-fixer:~2.10.1 lusitanian/oauth:~0.8.10 pdepend/pdepend:2.5.2 sebastian/phpcpd:~3.0.0 squizlabs/php_codesniffer:3.2.2 --no-update
+/opt/remi/php71/root/bin/php -dmemory_limit=2g /usr/local/bin/composer remove --dev sjparkinson/static-review fabpot/php-cs-fixer --no-update
+++++++++++++++++++++++++++++++++++++++
+/opt/remi/php71/root/bin/php -dmemory_limit=2g /usr/local/bin/composer update
+
+
+
+
+php71 -f bin/magento setup:install --base-url=http://192.168.0.107:8010/~vatsal/magentodemonew/ --db-host=localhost --db-name=magentodemo_m224 --db-user=vsourz --db-password=vsourz --backend-frontname=admin --admin-firstname=vatsal --admin-lastname=shah --admin-email=vatsal@squadmail.biz --admin-user=superadmin --admin-password=superadmin123 --language=en_US --currency=USD --timezone=America/Chicago --use-rewrites=1
+
+
+php71 -dmemory_limit=6G bin/magento setup:install \
+--admin-firstname=super \
+--admin-lastname=admin \
+--admin-email="vatsal@squadmail.biz" \
+--admin-user=superadmin \
+--admin-password=superadmin123 \
+--base-url=https://192.168.0.103/~vatsal/pwademo/ \
+--backend-frontname=admin \
+--db-name=pwademo_v \
+--db-host=localhost \
+--db-user=vsourz \
+--db-password=vsourz \
+--language=en_US \
+--currency=USD \
+--timezone=Europe/London \
+--use-rewrites=1 \
+--session-save=db \
+--cleanup-database

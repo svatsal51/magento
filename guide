@@ -1,3 +1,7 @@
+require(['Magento_Customer/js/customer-data'],function(customerData){
+	customerData.reload(['customer'], false);
+});
+
 ++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++++
 <!----------------------------------------------------------------------
 Magento2- Add link through content

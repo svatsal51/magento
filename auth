@@ -1,0 +1,217 @@
+require(['Magento_Customer/js/customer-data'],function(customerData){
+customerData.reload(['customer'], false);
+});
+
+
+
+
+<?php
+    $customerSession = $this->helper('Magento\Checkout\Helper\Cart')->getCart()->getCustomerSession();
+	$_loggedin = $customerSession->isLoggedIn();
+	$media_path = $this->helper('\Magento\Cms\Helper\Wysiwyg\Images')->getBaseUrl();
+?>
+<div class="live-chat">
+	<a href="javascript:;">Live <br/>Chat</a>
+</div>
+<div class="auth-wrapper-outer">
+	<div class="auth-wrap">
+		<div data-block="dropdown" class="auth-icon">
+		    <button type="button" class="drop-down-btn" data-trigger="trigger">	
+		    	<span class="xcf--usersvg"></span>
+		    	<span>                    
+                <?php if (!$_loggedin) : ?>
+                	<?= __('Login') ?> 
+                <?php else: ?>
+                	<?= __('Hi')?>,<?= $customerSession->getCustomer()->getData('firstname') ?>  
+                <?php endif;?>
+            	</span>            
+		    </button>
+		</div>
+		<div class="block block-drpdwn"
+		     data-mage-init='{
+		        "dropdownDialog": {
+		            "appendTo": "[data-block=dropdown]",
+		            "triggerTarget":"[data-trigger=trigger]",
+		            "timeout": 2000,
+		            "closeOnMouseLeave": true,
+		            "closeOnEscape": true,
+		            "autoOpen": false,
+		            "triggerEvent":"click",
+		            "triggerClass": "active",
+		            "parentClass": "active",
+		            "buttons": []
+		        }
+		     }'>
+		    <div class="dropdown-content <?php if ($_loggedin) {
+    echo 'logged';
+}?>">
+		    	<?php if (!$_loggedin) : ?>
+		    		<form class="form form-login" action="<?= $block->escapeUrl($block->getPostActionUrl()) ?>" method="post" id="login-form" data-mage-init='{"validation":{}}'>
+						<?= $block->getBlockHtml('formkey') ?>
+						<div class="field note"><?= $block->escapeHtml(__('If you have an account, sign in with your email address.')) ?></div>
+			            <fieldset class="fieldset login" data-hasrequired="<?= $block->escapeHtml(__('* Required Fields')) ?>">			                
+			                <div class="field email required">
+			                    <label class="label" for="email"><span><?= $block->escapeHtml(__('Email')) ?></span></label>
+			                    <div class="control">
+			                        <input name="login[username]" value="<?= $block->escapeHtmlAttr($block->getUsername()) ?>" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?> id="email" type="email" class="input-text" title="<?= $block->escapeHtmlAttr(__('Email')) ?>" data-mage-init='{"mage/trim-input":{}}' data-validate="{required:true, 'validate-email':true}">
+			                    </div>
+			                </div>
+			                <div class="field password required">
+			                    <label for="pass" class="label"><span><?= $block->escapeHtml(__('Password')) ?></span></label>
+			                    <div class="control">
+			                        <input name="login[password]" type="password" <?php if ($block->isAutocompleteDisabled()) : ?> autocomplete="off"<?php endif; ?> class="input-text" id="pass" title="<?= $block->escapeHtmlAttr(__('Password')) ?>" data-validate="{required:true}">
+			                    </div>
+			                </div>
+			                <?= $block->getChildHtml('form_additional_info') ?>
+			                <div class="actions-toolbar">
+			                    <div class="primary"><button type="submit" class="action login primary" name="send" id="send2"><span><?= $block->escapeHtml(__('Sign In')) ?></span></button></div>
+			                    <div class="secondary"><a class="action remind" href="<?= $block->escapeUrl($block->getForgotPasswordUrl()) ?>"><span><?= $block->escapeHtml(__('Forgot Your Password?')) ?></span></a></div>
+			                </div>
+			            </fieldset>
+			        </form>
+		       
+				<?php else : ?>
+					<div class="acc-pop">
+						<div class="field note">
+							<div class="customer-name">								
+								<?= __('Hi')?>,<?= $customerSession->getCustomer()->getData('firstname') ?>. <?= $block->escapeHtml(__('Welcome back!')) ?>
+								<span>
+									<a href="<?php echo $block->getUrl();?>customer/account/logout" class="action link">		        			
+										<span data-bind="i18n:'Sign Out'"></span>
+									</a>
+								</span>
+							</div>
+							<div class="membership">
+								<div class="plan">
+									<span class="plan-name"><?= __('GOLD')?></span>
+									<?= __('Member')?>
+								</div>
+								<div class="img gold"></div>								
+							</div>
+						</div>
+						<div class="fieldset">
+							<div class="row">
+								<div class="col-xs-3 mob-grid">
+									<ul class="acc-links">
+										<li><a href="#"><?= __('My Blink (Loyalty)')?></a></li>
+										<li><a href="<?php echo $block->getUrl();?>customer/account/"><?= __('My Account')?></a></li>
+										<li><a href="#"><?= __('Track Order')?></a></li>
+										<li><a href="<?php echo $block->getUrl();?>sales/order/history/"><?= __('My Orders')?></a></li>
+										<li><a href="#"><?= __('Wish List')?></a></li>
+										<li><a href="#"><?= __('Favorites')?></a></li>
+										<li><a href="#"><?= __('Browsing History')?></a></li>
+										<li><a href="#"><?= __('Notifications')?></a></li>
+									</ul>
+								</div>
+								<div class="col-xs-6 mob-grid">
+									<div class="upper-acc-pop">
+										<div class="my-blink-logo"></div>
+										<div class="r-points">
+											<span>0 KD</span> certificates. <span>0</span> points.
+											<a href="#">Manage your rewards</a>
+										</div>
+									</div>
+									<div class="past-purchase">
+										<div class="title-bar">
+											<?= __('Past Purchases');?>
+											<a href="<?php echo $block->getUrl();?>sales/order/history/">
+												<?= __('View All') ?>
+											</a>
+										</div>
+										<div class="orderwrap-bx">											
+											<div class="order-bx">
+												<form>
+													<div class="order-bx-inner">
+														<div class="img-bx"><img src="<?php echo $media_path;?>/wysiwyg/product.jpg" /></div>
+														<div class="detail-bx">
+															<div class="order-title-qty">
+																<div class="title">Sony PS4 Eye Camera 2</div>
+																<div class="qty">
+																	<label><?= __('Qty')?>:</label>
+																	<div class="control">
+																		<span class="increment">+</span>
+																		<input type="number" name="qty" id="qty" min="0" value="1" title="" class="input-text qty">
+																		<span class="decrement">-</span>
+																	</div>
+																</div>
+															</div>
+															<div class="btn-bar">
+																<button class="action primary">
+																	<span><?= __('Rate')?></span>
+																</button>
+																<button class="action primary">
+																	<span><?= __('Re-order')?></span>
+																</button>
+															</div>
+														</div>
+														<div class="price-bx">
+															<span class="price-container price-final_price tax weee">
+																<span class="price-label">Special Price</span>
+																<span id="old-price-3-widget-product-grid" data-price-amount="1299.75" data-price-type="finalPrice" class="price-wrapper ">
+																	<span class="price">$1,299.75</span>
+																</span>
+															</span>		
+														</div>
+													</div>
+												</form>
+											</div>	
+											<div class="order-bx">
+												<form>
+													<div class="order-bx-inner">
+														<div class="img-bx"><img src="<?php echo $media_path;?>/wysiwyg/product.jpg" /></div>
+														<div class="detail-bx">
+															<div class="order-title-qty">
+																<div class="title">Sony PS4 Eye Camera 2</div>
+																<div class="qty">
+																	<label><?= __('Qty')?>:</label>
+																	<div class="control">
+																		<span class="increment">+</span>
+																		<input type="number" name="qty" id="qty" min="0" value="1" title="" class="input-text qty">
+																		<span class="decrement">-</span>
+																	</div>
+																</div>
+															</div>
+															<div class="btn-bar">
+																<button class="action primary">
+																	<span><?= __('Rate')?></span>
+																</button>
+																<button class="action primary">
+																	<span><?= __('Re-order')?></span>
+																</button>
+															</div>
+														</div>
+														<div class="price-bx">
+															<span class="price-container price-final_price tax weee">
+																<span class="price-label">Special Price</span>
+																<span id="old-price-3-widget-product-grid" data-price-amount="1299.75" data-price-type="finalPrice" class="price-wrapper ">
+																	<span class="price">$1,299.75</span>
+																</span>
+															</span>		
+														</div>
+													</div>
+												</form>
+											</div>										
+										</div>
+									</div>
+								</div>
+								<div class="col-xs-3 mob-grid">
+									<div class="offer-product">
+										<div class="member-offer"><?= __('Member Offers')?></div>
+										<div class="product-img">
+											<img src="<?php echo $media_path;?>/wysiwyg/offer-pro.png" />
+										</div>
+										<div class="offerdesc">
+											<span class="discount-cal">save 25%</span> on Steelseries Headhphones ARCTIS 5 
+										</div>
+										<div class="validity">Valid until Sep. 1</div>
+										<a href="#" class="eye-link">See all your offers</a>
+									</div>
+								</div>
+							</div>							
+						</div>
+					</div>
+		        <?php endif; ?>
+		    </div>
+		</div>
+	</div>	
+</div>

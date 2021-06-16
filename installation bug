@@ -1,0 +1,47 @@
+#Require error fix
+------------------------------------
+vendor/magento/framework/view/element/template/file/validator.php 
+protected function isPathInDirectories($path, $directories)
+{
+    $realPath = str_replace('\\', '/', $this->fileDriver->getRealPath($path));
+    if (!is_array($directories)) {
+        $directories = (array)$directories;
+    }
+
+    foreach ($directories as $directory) {
+        if (0 === strpos($realPath, $directory)) {
+            return true;
+        }
+    }
+    return false;
+}
+
+#Template save of page builder 
+            &
+Product image upload error fix
+------------------------------------
+vendor\magento\framework\Image\Adapter\Gd2.php 
+on line 90.
+
+if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes)) {
+
+    Replace with 
+
+if ($url && isset($url['scheme']) && !in_array($url['scheme'], $allowed_schemes) && !file_exists($filename)) {
+
+
+#Xampp internal server error
+-------------------------------------
+open httpd.conf of apache 
+- enable below line 
+LoadModule version_module modules/mod_version.so
+
+- restart apache
+
+# Generate config.php file
+-------------------------------------
+php bin/magento module:enable --all
+
+
+#
+vendor/magento/framework/App/Filesystem/DirectoryList.php
